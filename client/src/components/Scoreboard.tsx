@@ -7,7 +7,7 @@ interface ScoreboardProps {
   userRole: 'host' | 'viewer';
   teams: Team[];
   gameState: GameState;
-  onScoreUpdate: () => void;
+  onScoreUpdate: (updatedTeams?: Team[]) => void;
   onResetGame: () => void;
 }
 
@@ -27,7 +27,6 @@ const Scoreboard: React.FC<ScoreboardProps> = ({
     setIsLoading(true);
     try {
       const response = await quizApi.updateTeamScore(gameCode, teamId, points);
-      // Update local state directly instead of refetching everything
       onScoreUpdate(response.teams);
     } catch (error) {
       console.error('Error updating score:', error);

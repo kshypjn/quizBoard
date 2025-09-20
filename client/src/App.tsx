@@ -60,13 +60,14 @@ function App() {
     }
   };
 
-  const handleScoreUpdate = async (updatedTeams?: Team[]) => {
+  const handleScoreUpdate = (updatedTeams?: Team[]) => {
     if (updatedTeams) {
-      // Update teams directly without refetching
       setTeams(updatedTeams);
-    } else if (gameCode) {
-      // Fallback to full reload if no teams provided
-      loadGameState(gameCode);
+    } else {
+      // Fallback: reload from server if no updated teams provided
+      if (gameCode) {
+        loadGameState(gameCode);
+      }
     }
   };
 
