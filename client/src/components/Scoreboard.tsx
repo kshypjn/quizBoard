@@ -55,9 +55,6 @@ const Scoreboard: React.FC<ScoreboardProps> = ({
     // Find the score of the current team
     const currentTeamScore = team.score;
     
-    // Find all teams with the same score as current team
-    const teamsWithSameScore = sortedTeams.filter(t => t.score === currentTeamScore);
-    
     // Find the first occurrence of this score in the sorted list
     const firstOccurrenceIndex = sortedTeams.findIndex(t => t.score === currentTeamScore);
     
