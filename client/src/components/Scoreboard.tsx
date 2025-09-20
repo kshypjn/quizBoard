@@ -26,8 +26,9 @@ const Scoreboard: React.FC<ScoreboardProps> = ({
   const updateScore = async (teamId: number, points: number) => {
     setIsLoading(true);
     try {
-      await quizApi.updateTeamScore(gameCode, teamId, points);
-      onScoreUpdate();
+      const response = await quizApi.updateTeamScore(gameCode, teamId, points);
+      // Update local state directly instead of refetching everything
+      onScoreUpdate(response.teams);
     } catch (error) {
       console.error('Error updating score:', error);
     } finally {
