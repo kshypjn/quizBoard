@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import { quizApi } from '../services/api';
 
 interface TeamSetupProps {
   onTeamsCreated: (teamNames: string[]) => void;
