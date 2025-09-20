@@ -55,22 +55,30 @@ const Scoreboard: React.FC<ScoreboardProps> = ({
     // Find the score of the current team
     const currentTeamScore = team.score;
     
+    // Find all teams with the same score as current team
+    const teamsWithSameScore = sortedTeams.filter(t => t.score === currentTeamScore);
+    
     // Find the first occurrence of this score in the sorted list
     const firstOccurrenceIndex = sortedTeams.findIndex(t => t.score === currentTeamScore);
     
     // Determine medal based on position (handling ties)
+    let medal = '';
     if (firstOccurrenceIndex === 0) {
       // First place (could be tied)
-      return '🥇';
+      medal = '🥇';
     } else if (firstOccurrenceIndex === 1) {
       // Second place (could be tied)
-      return '🥈';
+      medal = '🥈';
     } else if (firstOccurrenceIndex === 2) {
       // Third place (could be tied)
-      return '🥉';
+      medal = '🥉';
+    } else {
+      return null;
     }
     
-    return null;
+    // Add tie emoji if multiple teams have the same score
+    const isTie = teamsWithSameScore.length > 1;
+    return isTie ? `${medal}🤝` : medal;
   };
 
   return (
