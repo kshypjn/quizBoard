@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-
 interface TeamSetupProps {
   onTeamsCreated: (teamNames: string[]) => void;
 }
