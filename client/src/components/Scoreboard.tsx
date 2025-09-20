@@ -45,13 +45,34 @@ const Scoreboard: React.FC<ScoreboardProps> = ({
     setCustomPoints('');
   };
 
-  // Get top 3 teams by score for badges
-  const topTeams = [...teams].sort((a, b) => b.score - a.score).slice(0, 3);
+  // Get teams grouped by score for badges (handling ties)
   const getTeamBadge = (team: Team) => {
-    const rank = topTeams.findIndex(t => t.id === team.id);
-    if (rank === 0) return '🥇';
-    if (rank === 1) return '🥈';
-    if (rank === 2) return '🥉';
+    if (teams.length === 0) return null;
+    
+    // Sort teams by score (highest first)
+    const sortedTeams = [...teams].sort((a, b) => b.score - a.score);
+    
+    // Find the score of the current team
+    const currentTeamScore = team.score;
+    
+    // Find all teams with the same score as current team
+    const teamsWithSameScore = sortedTeams.filter(t => t.score === currentTeamScore);
+    
+    // Find the first occurrence of this score in the sorted list
+    const firstOccurrenceIndex = sortedTeams.findIndex(t => t.score === currentTeamScore);
+    
+    // Determine medal based on position (handling ties)
+    if (firstOccurrenceIndex === 0) {
+      // First place (could be tied)
+      return '🥇';
+    } else if (firstOccurrenceIndex === 1) {
+      // Second place (could be tied)
+      return '🥈';
+    } else if (firstOccurrenceIndex === 2) {
+      // Third place (could be tied)
+      return '🥉';
+    }
+    
     return null;
   };
 
